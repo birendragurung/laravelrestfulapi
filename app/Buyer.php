@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $transactions
  */
-class Buyer extends Model
+class Buyer extends User
 {
 
 	public function transactions()

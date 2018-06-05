@@ -18,6 +18,7 @@ class User extends Authenticatable
 
 	const REGULAR_USER = "false";
 
+	protected $table = 'users';
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -43,7 +44,7 @@ class User extends Authenticatable
 		'verification_token' ,
 	];
 
-	public function ifVerified()
+	public function isVerified()
 	{
 		return $this->admin == User::VERIFIED_USER;
 	}
