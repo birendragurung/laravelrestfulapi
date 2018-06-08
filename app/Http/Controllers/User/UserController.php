@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -31,12 +32,18 @@ class UserController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$rules = [
+		$rules     = [
 			'name'     => 'required' ,
 			'email'    => 'required|email|unique:users' ,
 			'password' => 'required|min:6|confirmed' ,
 		];
-
+		$validator = Validator::make($request->all() , $rules);
+		if ($validator->fails()){
+			if ($request->expectsJson()){
+				return response()->json($validator->getMessageBag() , 400);
+			}
+			return redirect()->back()->withErrors($validator->getMessageBag());
+		}
 		$this->validate($request , $rules);
 
 		$data                       = $request->all();
@@ -90,9 +97,9 @@ class UserController extends Controller
 			$user->name = $request->name;
 		}
 		if ($request->has('email') && $user->email != $request->email){
-			$user->verified       = User::UNVERIFIED_USER;
-			$user->verified_token = User::generateVerificationCode();
-			$user->email          = $request->email;
+			$user->verified           = User::UNVERIFIED_USER;
+			$user->verification_token = User::generateVerificationCode();
+			$user->email              = $request->email;
 		}
 		if ($request->has('password')){
 			$user->password = bcrypt($request->password);
@@ -127,6 +134,10 @@ class UserController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = User::findOrFail($id);
+
+		$user->delete();
+
+		return response()->json(['data' => $user] ,200);
 	}
 }
