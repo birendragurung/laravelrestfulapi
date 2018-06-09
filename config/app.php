@@ -160,6 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
         LukePOLO\LaraCart\LaraCartServiceProvider::class
 
     ],
@@ -210,7 +211,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class
+        'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
 
     ],
 

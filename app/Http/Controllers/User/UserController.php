@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\ApiController;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
 
 	/**
@@ -18,9 +18,8 @@ class UserController extends Controller
 	public function index()
 	{
 		$userAll = User::all();
-		return response()->json([
-			'data' => $userAll ,
-		] , 200);
+		return $this->showAll($userAll);
+
 	}
 
 	/**
@@ -54,7 +53,7 @@ class UserController extends Controller
 
 		$user = User::create($data);
 
-		return response()->json(['data' => $user] , 201);
+		return $this->showOne($user,201);
 	}
 
 	/**
@@ -68,9 +67,8 @@ class UserController extends Controller
 	{
 		$user = User::findOrFail($id);
 
-		return response()->json([
-			'data' => $user ,
-		] , 200);
+		return $this->showOne($user);
+
 
 	}
 
@@ -106,10 +104,7 @@ class UserController extends Controller
 		}
 		if ($request->has('admin')){
 			if (!$user->isVerified()){
-				return response()->json([
-					'error' => 'Only verified users can modify the admin field' ,
-					'code'  => 409 ,
-				] , 409);
+				return $this->errorResponse( 'Only verified users can modify the admin field' , 409);
 			}
 			$user->admin = $request->admin;
 		}
@@ -120,9 +115,7 @@ class UserController extends Controller
 			] , 422);
 		}
 		$user->save();
-		return response()->json([
-			'data' => $user ,
-		] , 200);
+		return $this->showOne($user);
 	}
 
 	/**
@@ -138,6 +131,6 @@ class UserController extends Controller
 
 		$user->delete();
 
-		return response()->json(['data' => $user] ,200);
+		return $this->showOne($user);
 	}
 }
