@@ -5,6 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property \Carbon\Carbon $deleted_at
+ * @property \App\Product product
+ * @property \App\Buyer $buyer
+ */
 class Transaction extends Model
 {
 

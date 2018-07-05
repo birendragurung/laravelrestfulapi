@@ -3,22 +3,27 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Buyer;
-use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BuyerController extends ApiController
+class BuyerProductController extends Controller
 {
 
 	/**
 	 * Display a listing of the resource.
 	 *
+	 * @param \App\Buyer $buyer
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Buyer $buyer)
 	{
-		$buyers = Buyer::has('transactions')->orderBy('id' , 'asc')->get();
-		return $this->showAll($buyers) ;
+		$products = $buyer->transactions()
+			->with("product")
+			->get()
+			->pluck('product');
+
+		return $this->showAll($products);
 	}
 
 	/**
@@ -46,23 +51,23 @@ class BuyerController extends ApiController
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int $id
+	 * @param  \App\Buyer $buyer
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Buyer $buyer)
 	{
-		return $this->showOne($buyer);
+		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int $id
+	 * @param  \App\Buyer $buyer
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit(Buyer $buyer)
 	{
 		//
 	}
@@ -71,11 +76,11 @@ class BuyerController extends ApiController
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request $request
-	 * @param  int $id
+	 * @param  \App\Buyer $buyer
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request , $id)
+	public function update(Request $request , Buyer $buyer)
 	{
 		//
 	}
@@ -83,11 +88,11 @@ class BuyerController extends ApiController
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int $id
+	 * @param  \App\Buyer $buyer
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy(Buyer $buyer)
 	{
 		//
 	}

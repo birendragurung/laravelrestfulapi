@@ -53,7 +53,7 @@ class UserController extends ApiController
 
 		$user = User::create($data);
 
-		return $this->showOne($user,201);
+		return $this->showOne($user , 201);
 	}
 
 	/**
@@ -104,15 +104,12 @@ class UserController extends ApiController
 		}
 		if ($request->has('admin')){
 			if (!$user->isVerified()){
-				return $this->errorResponse( 'Only verified users can modify the admin field' , 409);
+				return $this->errorResponse('Only verified users can modify the admin field' , 409);
 			}
 			$user->admin = $request->admin;
 		}
 		if (!$user->isDirty()){
-			return response()->json([
-				'error' => 'You need to specify a different value to update' ,
-				'code'  => 422 ,
-			] , 422);
+			return $this->errorResponse('You need to specify a different value to update' , 422);
 		}
 		$user->save();
 		return $this->showOne($user);

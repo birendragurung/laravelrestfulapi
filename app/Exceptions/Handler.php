@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
@@ -83,6 +84,10 @@ class Handler extends ExceptionHandler
 		    if ($errorCode == 1451){
 			    return $this->errorResponse('Cannot remove this resource permanently. It is related with any other resource');
 		    }
+	    }
+	    elseif ($exception instanceof MethodNotAllowedHttpException){
+		    $errorCode = $exception->getMessage();
+		    return $this->errorResponse('Method not allowed or supported',501);
 	    }
 	    if (config('app.debug')){
 		    return parent::render($request, $exception);

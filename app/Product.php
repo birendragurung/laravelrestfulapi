@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property mixed $categories
+ * @property \Illuminate\Database\Eloquent\Collection $categories
+ * @property \Illuminate\Database\Eloquent\Collection $transactions
+ * @property \App\Seller $seller
  */
 class Product extends Model
 {
@@ -29,7 +31,7 @@ class Product extends Model
 
 	public function isAvailable()
 	{
-		return $this->status = Product::AVAILABLE_PRODUCT;
+		return $this->status == Product::AVAILABLE_PRODUCT;
 	}
 
 	public function categories()

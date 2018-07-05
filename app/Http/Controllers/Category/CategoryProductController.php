@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Transaction;
+namespace App\Http\Controllers\Category;
 
-use App\Http\Controllers\ApiController;
-use App\Transaction;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TransactionController extends ApiController
+class CategoryProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-	    $transactions = Transaction::all();
 
-	    return $this->showAll($transactions);
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param \App\Category $category
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+    public function index(Category $category)
+    {
+	    $products = $category->products;
+
+	    return $this->showAll($products);
     }
 
     /**
@@ -42,25 +44,24 @@ class TransactionController extends ApiController
         //
     }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param \App\Transaction $transaction
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-    public function show(Transaction $transaction)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Category $category)
     {
-	    return $this->showOne($transaction);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
         //
     }
@@ -69,10 +70,10 @@ class TransactionController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -80,10 +81,10 @@ class TransactionController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
         //
     }
