@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seller extends User
 {
-
+	protected $hidden = [
+		'password' ,
+		'remember_token' ,
+		'verification_token' ,
+		'cart_session_id' ,
+		'pivot' ,
+	];
 	protected static function boot()
 	{
 		parent::boot();

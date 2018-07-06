@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 class Buyer extends User
 {
 
+	protected $hidden = [
+		'password' ,
+		'remember_token' ,
+		'verification_token' ,
+		'cart_session_id' ,
+		'pivot' ,
+	];
 	protected static function boot()
 	{
 		parent::boot();

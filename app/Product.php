@@ -12,12 +12,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Product extends Model
 {
+
 	use SoftDeletes;
+
+	protected $hidden = [
+		'pivot' ,
+	];
 
 	protected $dates = [
 		'deleted_at' ,
 	];
+
 	const AVAILABLE_PRODUCT = 'available';
+
 	const UNAVAILABLE_PRODUCT = 'unavailable';
 
 	protected $fillable = [
