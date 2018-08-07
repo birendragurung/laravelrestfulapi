@@ -88,6 +88,8 @@ class Handler extends ExceptionHandler
 	    elseif ($exception instanceof MethodNotAllowedHttpException){
 		    $errorCode = $exception->getMessage();
 		    return $this->errorResponse('Method not allowed or supported',501);
+	    }else if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException){
+		    return $this->errorResponse($exception->getMessage() , 422);
 	    }
 	    if (config('app.debug')){
 		    return parent::render($request, $exception);

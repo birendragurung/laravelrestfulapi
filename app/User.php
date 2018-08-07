@@ -5,15 +5,23 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
+/**
+ * @property \Carbon\Carbon $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property int $id
+ * @property \Carbon\Carbon $updated_at
+ */
 class User extends Authenticatable
 {
 
-	use Notifiable, SoftDeletes;
+	use Notifiable , SoftDeletes , HasApiTokens;
 
 	protected $dates = [
 		'deleted_at' ,
 	];
+
 	const VERIFIED_USER = "1";
 
 	const UNVERIFIED_USER = "0";
@@ -23,6 +31,7 @@ class User extends Authenticatable
 	const REGULAR_USER = "false";
 
 	protected $table = 'users';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -73,13 +82,14 @@ class User extends Authenticatable
 
 	public function getNameAttribute()
 	{
-		return ucwords($this->attributes['name']) ;
+		return ucwords($this->attributes['name']);
 	}
 
 	public function setEmailAttribute($email)
 	{
 		$this->attributes['email'] = $email;
 	}
+
 	public function getEmailAttribute($email)
 	{
 		$this->attributes['email'] = $email;
